@@ -1,13 +1,9 @@
 package com.nebtrx
 
-import cats.data.Chain
 import cats.effect.ExitCase.{Canceled, Completed, Error}
-import cats.implicits._
+import cats.effect.Sync
 import cats.effect.concurrent.Ref
-import cats.effect.{IO, Sync}
-import cats.instances.string._
-import cats.syntax.semigroup._
-import com.sun.net.httpserver.Authenticator.Success
+import cats.implicits._
 
 object Main extends App {
   println("Hello " |+| "Cats!")
@@ -21,7 +17,7 @@ trait Tap[F[_]] {
 object Tap {
   type Percentage = Double
 
-  private case class TapState(totalRequest: Long, failedRequests: Long) {
+  case class TapState(totalRequest: Long, failedRequests: Long) {
     def logRequestWithResult(success: Boolean): TapState =
       this.copy(
         totalRequest = this.totalRequest + 1,
